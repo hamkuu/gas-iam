@@ -1,2 +1,5 @@
 # PyCharm
 .idea
+
+# Database
+backend/db.sqlite3
