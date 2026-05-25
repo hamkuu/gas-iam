@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<h1>My Profile</h1>
+
+<table>
+    <tr>
+        <th>Username</th>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ user.email }}</td>
+    </tr>
+    <tr>
+        <th>First name</th>
+        <td>{{ user.first_name|default:"—" }}</td>
+    </tr>
+    <tr>
+        <th>Last name</th>
+        <td>{{ user.last_name|default:"—" }}</td>
+    </tr>
+    <tr>
+        <th>Phone number</th>
+        <td>{{ user.tel|default:"—" }}</td>
+    </tr>
+    <tr>
+        <th>Prefecture</th>
+        <td>{{ user.pref|default:"—" }}</td>
+    </tr>
+    <tr>
+        <th>Date joined</th>
+        <td>{{ user.date_joined }}</td>
+    </tr>
+    <tr>
+        <th>Last login</th>
+        <td>{{ user.last_login|default:"—" }}</td>
+    </tr>
+</table>
+</body>
+</html>
