@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-</head>
-<body>
+{% extends "accounts/base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
 <h1>My Profile</h1>
 
 <table>
@@ -38,5 +36,4 @@
     {% csrf_token %}
     <button type="submit">Logout</button>
 </form>
-</body>
-</html>
+{% endblock %}
