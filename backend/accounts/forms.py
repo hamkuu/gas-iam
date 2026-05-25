@@ -11,9 +11,16 @@ tel_validator = RegexValidator(
 )
 
 
+pass_validator = RegexValidator(
+    regex=r"(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}",
+    message="Must have at least 8 chars, one uppercase, one lowercase, and one digit.",
+)
+
+
 class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(min_length=3, max_length=100)
     email = forms.EmailField()
+    password1 = forms.CharField(widget=forms.PasswordInput, validators=[pass_validator])
     tel = forms.CharField(max_length=20, validators=[tel_validator])
     pref = forms.ModelChoiceField(queryset=Prefecture.objects.all())
 

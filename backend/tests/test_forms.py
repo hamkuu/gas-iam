@@ -78,6 +78,30 @@ class TestUserRegistrationForm:
         assert not form.is_valid()
         assert "password1" in form.errors
 
+    def test_password_too_short(self, valid_data):
+        valid_data["password1"] = valid_data["password2"] = "Aa1"
+        form = UserRegistrationForm(data=valid_data)
+        assert not form.is_valid()
+        assert "password1" in form.errors
+
+    def test_password_no_uppercase(self, valid_data):
+        valid_data["password1"] = valid_data["password2"] = "str0ng!pass"
+        form = UserRegistrationForm(data=valid_data)
+        assert not form.is_valid()
+        assert "password1" in form.errors
+
+    def test_password_no_lowercase(self, valid_data):
+        valid_data["password1"] = valid_data["password2"] = "STR0NG!PASS"
+        form = UserRegistrationForm(data=valid_data)
+        assert not form.is_valid()
+        assert "password1" in form.errors
+
+    def test_password_no_digit(self, valid_data):
+        valid_data["password1"] = valid_data["password2"] = "Strong!Pass"
+        form = UserRegistrationForm(data=valid_data)
+        assert not form.is_valid()
+        assert "password1" in form.errors
+
     # --- tel ---
 
     def test_tel_digits_only(self, valid_data):
