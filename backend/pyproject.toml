@@ -7,3 +7,15 @@ requires-python = ">=3.12"
 dependencies = [
     "django>=6.0.5",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "pytest-django>=4.12.0",
+]
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-report=term-missing"
+DJANGO_SETTINGS_MODULE = "gas_iam.settings"
+testpaths = ["tests"]
