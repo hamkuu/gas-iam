@@ -1,15 +1,27 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.core.validators import RegexValidator
 
 from .models import Prefecture, User
 
 
 class UserRegistrationForm(UserCreationForm):
+    username = forms.CharField(min_length=3, max_length=100)
+    email = forms.EmailField()
+    tel = forms.CharField(
+        max_length=20,
+        validators=[
+            RegexValidator(r"^\d+$", "Enter a valid phone number (digits only).")
+        ],
+    )
+    pref = forms.ModelChoiceField(queryset=Prefecture.objects.all())
+
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2", "tel", "pref")
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields["email"].required = True
-        self.fields["pref"].queryset = Prefecture.objects.all()
-        self.fields["pref"].empty_label = "--- Select prefecture ---"
+    def clean_email(self):
+        email = self.cleaned_data["email"]
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("This email address is already registered.")
+        return email
