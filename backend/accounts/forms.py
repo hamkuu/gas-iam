@@ -5,15 +5,16 @@ from django.core.validators import RegexValidator
 from .models import Prefecture, User
 
 
+tel_validator = RegexValidator(
+    regex=r"^\d+$",
+    message="Enter a valid phone number (digits only).",
+)
+
+
 class UserRegistrationForm(UserCreationForm):
     username = forms.CharField(min_length=3, max_length=100)
     email = forms.EmailField()
-    tel = forms.CharField(
-        max_length=20,
-        validators=[
-            RegexValidator(r"^\d+$", "Enter a valid phone number (digits only).")
-        ],
-    )
+    tel = forms.CharField(max_length=20, validators=[tel_validator])
     pref = forms.ModelChoiceField(queryset=Prefecture.objects.all())
 
     class Meta:
