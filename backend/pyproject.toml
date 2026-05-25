@@ -16,5 +16,6 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
+addopts = "--cov --cov-report=term-missing"
 DJANGO_SETTINGS_MODULE = "gas_iam.settings"
 testpaths = ["tests"]
