@@ -1,3 +1,4 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
 
@@ -11,3 +12,14 @@ class Prefecture(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class User(AbstractUser):
+    tel = models.CharField(max_length=20, null=True, blank=True)
+    pref = models.ForeignKey(
+        "Prefecture",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="users",
+    )

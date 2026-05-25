@@ -1,10 +1,10 @@
 [
 {
-  "model": "auth.user",
+  "model": "accounts.user",
   "pk": 1,
   "fields": {
-    "password": "pbkdf2_sha256$1200000$dM4gYNdK9nUEbkuv5uRRfa$c9/8AXcvVzavoW+t8Q3eDrHzTc5ME4NNthyNVpXu5Fk=",
-    "last_login": "2026-05-24T13:31:36.017Z",
+    "password": "pbkdf2_sha256$1200000$jcatwDRM6i4ujqCQ1haS3F$WiOTIyfa/8PXh7OWdkYsyIkzWumC58IBSbIy2gkOpxY=",
+    "last_login": null,
     "is_superuser": true,
     "username": "gas_admin",
     "first_name": "",
@@ -12,7 +12,9 @@
     "email": "gas_admin@gmail.com",
     "is_staff": true,
     "is_active": true,
-    "date_joined": "2026-05-24T13:31:30.213Z",
+    "date_joined": "2026-05-25T04:34:04.789Z",
+    "tel": null,
+    "pref": null,
     "groups": [],
     "user_permissions": []
   }

@@ -2,7 +2,7 @@
 
 ## Pre-requisites
 
-- Python 3.13
+- Python 3.12
 - Django 6
 
 ## Default Accounts
