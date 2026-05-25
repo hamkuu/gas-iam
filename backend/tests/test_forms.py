@@ -17,7 +17,6 @@ def valid_data(prefecture):
 
 @pytest.mark.django_db
 class TestUserRegistrationForm:
-
     # --- valid ---
 
     def test_valid_form(self, valid_data):
