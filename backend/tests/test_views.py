@@ -11,7 +11,7 @@ API_REGISTER_URL = reverse("accounts:api_register")
 
 
 @pytest.fixture
-def valid_payload(prefecture):
+def valid_form_payload(prefecture):
     return {
         "username": "newuser",
         "email": "newuser@example.com",
@@ -40,22 +40,22 @@ class TestRegisterView:
         assert res.status_code == 200
         assert "form" in res.context
 
-    def test_post_valid_creates_user(self, client, valid_payload):
-        client.post(REGISTER_URL, valid_payload)
+    def test_post_valid_creates_user(self, client, valid_form_payload):
+        client.post(REGISTER_URL, valid_form_payload)
         assert User.objects.filter(username="newuser").exists()
 
-    def test_post_valid_logs_in_user(self, client, valid_payload):
-        client.post(REGISTER_URL, valid_payload)
+    def test_post_valid_logs_in_user(self, client, valid_form_payload):
+        client.post(REGISTER_URL, valid_form_payload)
         assert "_auth_user_id" in client.session
 
-    def test_post_valid_redirects_to_profile(self, client, valid_payload):
-        res = client.post(REGISTER_URL, valid_payload)
+    def test_post_valid_redirects_to_profile(self, client, valid_form_payload):
+        res = client.post(REGISTER_URL, valid_form_payload)
         assert res.status_code == 302
         assert res["Location"] == PROFILE_URL
 
-    def test_post_invalid_renders_form_with_errors(self, client, valid_payload):
-        valid_payload["username"] = "ab"
-        res = client.post(REGISTER_URL, valid_payload)
+    def test_post_invalid_renders_form_with_errors(self, client, valid_form_payload):
+        valid_form_payload["username"] = "ab"
+        res = client.post(REGISTER_URL, valid_form_payload)
         assert res.status_code == 200
         assert res.context["form"].errors
 
