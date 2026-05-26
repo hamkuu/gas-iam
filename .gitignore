@@ -1,8 +1,5 @@
 # PyCharm
 .idea
 
-# Database
-backend/db.sqlite3
-
 # Test
 backend/.coverage
