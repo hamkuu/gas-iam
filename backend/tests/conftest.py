@@ -8,7 +8,7 @@ User = get_user_model()
 
 @pytest.fixture
 def prefecture():
-    return Prefecture.objects.create(code=13, name="東京都", name_en="Tokyo")
+    return Prefecture.objects.get(code=13)  # Tokyo
 
 
 @pytest.fixture
