@@ -22,7 +22,7 @@ COPY . .
 RUN npm run build
 
 # ---- Serve stage ----
-FROM nginx:alpine
+FROM nginx:alpine AS production
 
 # nginx official image processes /etc/nginx/templates/*.template with envsubst
 # and writes the result to /etc/nginx/conf.d/ on container start
