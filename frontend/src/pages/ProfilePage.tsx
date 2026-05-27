@@ -15,7 +15,6 @@ function getPrefectureName(code: number | null | undefined): string {
 export default function ProfilePage() {
   const navigate = useNavigate()
   const [user, setUser] = useState<UserDetails | null>(null)
-  const [error, setError] = useState<string | null>(null)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const handleLogout = async () => {
@@ -46,14 +45,6 @@ export default function ProfilePage() {
         navigate('/login', { replace: true })
       })
   }, [navigate])
-
-  if (error) {
-    return (
-      <main>
-        <p role="alert"><mark>{error}</mark></p>
-      </main>
-    )
-  }
 
   if (!user) {
     return (
