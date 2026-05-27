@@ -12,6 +12,7 @@ env:
   PROJECT_ID: gas-iam
   REGION: asia-northeast1
   IMAGE: asia-northeast1-docker.pkg.dev/gas-iam/gas-iam/backend:latest
+  SERVICE: gas-iam-backend
 
 jobs:
   deploy:
@@ -34,4 +35,11 @@ jobs:
         run: |
           gcloud builds submit ./backend \
             --tag ${{ env.IMAGE }} \
+            --project ${{ env.PROJECT_ID }}
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run services update ${{ env.SERVICE }} \
+            --image ${{ env.IMAGE }} \
+            --region ${{ env.REGION }} \
             --project ${{ env.PROJECT_ID }}
