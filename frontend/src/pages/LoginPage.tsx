@@ -2,11 +2,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { login } from '../api/auth'
-import type { components } from '../types/api'
-
-type JWTResponse = components['schemas']['JWT']
 
 const loginSchema = z.object({
   username: z.string().min(1, 'Username is required'),
@@ -16,8 +13,8 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginPage() {
+  const navigate = useNavigate()
   const [serverError, setServerError] = useState<string | null>(null)
-  const [user, setUser] = useState<JWTResponse['user'] | null>(null)
 
   const {
     register,
@@ -33,7 +30,7 @@ export default function LoginPage() {
       const jwt = await login(values)
       localStorage.setItem('access', jwt.access)
       localStorage.setItem('refresh', jwt.refresh)
-      setUser(jwt.user)
+      navigate('/', { replace: true })
     } catch (err: unknown) {
       if (err && typeof err === 'object' && 'response' in err) {
         const res = (err as { response?: { data?: { detail?: string } } }).response
@@ -42,14 +39,6 @@ export default function LoginPage() {
         setServerError('An unexpected error occurred.')
       }
     }
-  }
-
-  if (user) {
-    return (
-      <main>
-        <p>Welcome, <strong>{user.username}</strong>!</p>
-      </main>
-    )
   }
 
   return (
