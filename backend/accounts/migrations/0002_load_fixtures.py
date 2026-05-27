@@ -3,6 +3,7 @@ from django.db import migrations
 
 def load_fixtures(apps, schema_editor):
     from django.core.management import call_command
+
     call_command("loaddata", "accounts/fixtures/prefectures.json")
     call_command("loaddata", "accounts/fixtures/users.json")
 
