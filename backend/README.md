@@ -16,3 +16,12 @@
 ```bash
 docker exec -it gas-iam-backend-1 pytest .
 ```
+
+## Deployment
+
+```bash
+docker build --platform linux/amd64 \
+  -t asia-northeast1-docker.pkg.dev/gas-iam/gas-iam/backend:latest \
+  ./backend
+docker push asia-northeast1-docker.pkg.dev/gas-iam/gas-iam/backend:latest
+```

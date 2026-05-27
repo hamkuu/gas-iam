@@ -16,3 +16,4 @@ export const registerSchema = z.object({
 })
 
 export type RegisterFormValues = z.infer<typeof registerSchema>
+export type RegisterFormInput = z.input<typeof registerSchema>

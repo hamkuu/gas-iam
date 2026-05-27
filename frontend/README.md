@@ -24,6 +24,15 @@ npm run lint
 npm run gen:openapi
 ```
 
+## Deployment
+
+```bash
+docker buildx build --platform linux/amd64 --push \
+  -t asia-northeast1-docker.pkg.dev/gas-iam/gas-iam/frontend:latest \
+  ./frontend
+docker push asia-northeast1-docker.pkg.dev/gas-iam/gas-iam/frontend:latest
+```
+
 ## References
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react)
