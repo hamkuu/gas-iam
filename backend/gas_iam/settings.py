@@ -68,6 +68,7 @@ REST_FRAMEWORK = {
 REST_AUTH = {
     "USE_JWT": True,
     "JWT_AUTH_HTTPONLY": False,
+    "USER_DETAILS_SERIALIZER": "accounts.serializers.UserDetailsSerializer",
 }
 
 ROOT_URLCONF = "gas_iam.urls"
