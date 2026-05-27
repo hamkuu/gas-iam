@@ -20,12 +20,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*hfybz7n35a*j@7dpsxe58!*f37@4d%mc_p)@o+8*_e%ohorqz"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-*hfybz7n35a*j@7dpsxe58!*f37@4d%mc_p)@o+8*_e%ohorqz",
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "1") == "1"
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
 
 AUTH_USER_MODEL = "accounts.User"
 
@@ -134,6 +137,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 LOGIN_URL = "accounts:login"
 LOGIN_REDIRECT_URL = "accounts:profile"
