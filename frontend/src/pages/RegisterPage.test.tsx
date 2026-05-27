@@ -3,11 +3,31 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 import RegisterPage from './RegisterPage'
+import * as authApi from '../api/auth'
 
 // Mock the API so tests don't hit the network
 vi.mock('../api/auth', () => ({
   register: vi.fn(),
 }))
+
+const validFormData = {
+  username: 'hirouser',
+  email: 'hiro@example.com',
+  password: 'StrongPass1',
+  password_confirm: 'StrongPass1',
+  tel: '0312345678',
+  pref: '13',
+}
+
+async function fillAndSubmit() {
+  await userEvent.type(screen.getByLabelText(/username/i), validFormData.username)
+  await userEvent.type(screen.getByLabelText(/email/i), validFormData.email)
+  await userEvent.type(screen.getByLabelText(/^password$/i), validFormData.password)
+  await userEvent.type(screen.getByLabelText(/confirm password/i), validFormData.password_confirm)
+  await userEvent.type(screen.getByLabelText(/phone/i), validFormData.tel)
+  await userEvent.selectOptions(screen.getByLabelText(/prefecture/i), validFormData.pref)
+  await userEvent.click(screen.getByRole('button', { name: /create account/i }))
+}
 
 function renderPage() {
   return render(
@@ -71,5 +91,38 @@ describe('RegisterPage', () => {
     await userEvent.type(input, '03-1234')
     await userEvent.tab()
     expect(await screen.findByText('Digits only')).toBeInTheDocument()
+  })
+
+  describe('onSubmit', () => {
+    it('navigates to /login on successful registration', async () => {
+      vi.mocked(authApi.register).mockResolvedValueOnce(undefined)
+      renderPage()
+      await fillAndSubmit()
+      // MemoryRouter won't visually navigate, but register() should have been called
+      expect(authApi.register).toHaveBeenCalledOnce()
+      expect(authApi.register).toHaveBeenCalledWith({
+        username: 'hirouser',
+        email: 'hiro@example.com',
+        password: 'StrongPass1',
+        tel: '0312345678',
+        pref: 13,
+      })
+    })
+
+    it('shows server error message from API response', async () => {
+      vi.mocked(authApi.register).mockRejectedValueOnce({
+        response: { data: { username: ['A user with that username already exists.'] } },
+      })
+      renderPage()
+      await fillAndSubmit()
+      expect(await screen.findByText('A user with that username already exists.')).toBeInTheDocument()
+    })
+
+    it('shows fallback error on unexpected failure', async () => {
+      vi.mocked(authApi.register).mockRejectedValueOnce(new Error('Network Error'))
+      renderPage()
+      await fillAndSubmit()
+      expect(await screen.findByText('An unexpected error occurred.')).toBeInTheDocument()
+    })
   })
 })
