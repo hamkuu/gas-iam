@@ -5,9 +5,6 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { register as registerUser } from '../api/auth'
 import { PREFECTURES } from '../constants/prefectures'
-import type { components } from '../types/api'
-
-type RegisterPayload = components['schemas']['Register']
 
 const registerSchema = z.object({
   username: z.string().min(3, 'At least 3 characters'),
@@ -16,9 +13,13 @@ const registerSchema = z.object({
     /(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}/,
     'Min 8 chars with uppercase, lowercase, and a number'
   ),
+  password_confirm: z.string(),
   tel: z.string().regex(/^\d+$/, 'Digits only'),
-  pref: z.coerce.number().int('Select a prefecture'),
-}) satisfies z.ZodType<RegisterPayload>
+  pref: z.coerce.number().int().min(1, 'Select a prefecture'),
+}).refine((data) => data.password === data.password_confirm, {
+  message: 'Passwords do not match',
+  path: ['password_confirm'],
+})
 
 type RegisterFormValues = z.infer<typeof registerSchema>
 
@@ -32,12 +33,14 @@ export default function RegisterPage() {
     formState: { errors, isSubmitting },
   } = useForm<RegisterFormValues>({
     resolver: zodResolver(registerSchema),
+    mode: 'onBlur',
   })
 
   const onSubmit = async (values: RegisterFormValues) => {
     setServerError(null)
+    const { password_confirm: _, ...payload } = values
     try {
-      await registerUser(values)
+      await registerUser(payload)
       navigate('/login')
     } catch (err: unknown) {
       if (err && typeof err === 'object' && 'response' in err) {
@@ -89,6 +92,16 @@ export default function RegisterPage() {
         />
         {errors.password && <small>{errors.password.message}</small>}
 
+        <label htmlFor="password_confirm">Confirm password</label>
+        <input
+          id="password_confirm"
+          type="password"
+          autoComplete="new-password"
+          aria-invalid={!!errors.password_confirm}
+          {...register('password_confirm')}
+        />
+        {errors.password_confirm && <small>{errors.password_confirm.message}</small>}
+
         <label htmlFor="tel">Phone number</label>
         <input
           id="tel"
@@ -119,7 +132,7 @@ export default function RegisterPage() {
         </p>
       </form>
 
-      <p>Already have an account? <Link to="/">Sign in</Link></p>
+      <p>Already have an account? <Link to="/login">Sign in</Link></p>
     </main>
   )
 }
