@@ -1,1 +1,17 @@
 /* Simple.css handles base styles. Add overrides here if needed. */
+
+/* Validation error messages */
+input[aria-invalid="true"] + small,
+select[aria-invalid="true"] + small {
+  color: #c0392b;
+  font-size: 0.8rem;
+  margin-top: -0.5rem;  /* pull it closer to the input */
+  display: block;
+}
+
+/* Red border on invalid fields (Simple.css may not do this by default) */
+input[aria-invalid="true"],
+select[aria-invalid="true"] {
+  border-color: #c0392b;
+  outline-color: #c0392b;
+}
