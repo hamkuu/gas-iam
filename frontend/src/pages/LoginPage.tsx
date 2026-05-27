@@ -78,9 +78,11 @@ export default function LoginPage() {
         />
         {errors.password && <small>{errors.password.message}</small>}
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? 'Signing in…' : 'Sign in'}
-        </button>
+        <p>
+          <button type="submit" disabled={isSubmitting}>
+            {isSubmitting ? 'Signing in…' : 'Sign in'}
+          </button>
+        </p>
       </form>
     </main>
   )
