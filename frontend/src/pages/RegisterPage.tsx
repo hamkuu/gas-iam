@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { register as registerUser } from '../api/auth'
 import { PREFECTURES } from '../constants/prefectures'
-import { registerSchema, type RegisterFormValues } from '../validators/register'
+import { registerSchema, type RegisterFormValues, type RegisterFormInput } from '../validators/register'
 
 export default function RegisterPage() {
   const [serverError, setServerError] = useState<string | null>(null)
@@ -14,7 +14,7 @@ export default function RegisterPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormValues>({
+  } = useForm<RegisterFormInput, any, RegisterFormValues>({
     resolver: zodResolver(registerSchema),
     mode: 'onBlur',
   })
