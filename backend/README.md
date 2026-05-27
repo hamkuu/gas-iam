@@ -1,9 +1,10 @@
 # Backend for Gas IAM
 
-## Pre-requisites
+## Tech Stack
 
 - Python 3.12
 - Django 6
+- Django REST Framework
 
 ## Default Accounts
 
