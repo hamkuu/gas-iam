@@ -12,6 +12,12 @@
 npm run dev
 ```
 
+## Lint
+
+```bash
+npm run lint
+```
+
 ## Sync OpenAPI scheme with backend
 
 ```bash
