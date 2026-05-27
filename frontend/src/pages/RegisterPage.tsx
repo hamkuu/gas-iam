@@ -38,7 +38,13 @@ export default function RegisterPage() {
 
   const onSubmit = async (values: RegisterFormValues) => {
     setServerError(null)
-    const { password_confirm: _, ...payload } = values
+    const payload = {
+      username: values.username,
+      email: values.email,
+      password: values.password,
+      tel: values.tel,
+      pref: values.pref,
+    }
     try {
       await registerUser(payload)
       navigate('/login')
