@@ -288,6 +288,8 @@ export interface components {
             readonly email?: string;
             first_name?: string;
             last_name?: string;
+            tel?: string | null;
+            pref?: number | null;
         };
         Register: {
             username: string;
@@ -320,6 +322,8 @@ export interface components {
             readonly email: string;
             first_name?: string;
             last_name?: string;
+            tel?: string | null;
+            pref: number | null;
         };
     };
     responses: never;

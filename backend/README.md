@@ -8,7 +8,6 @@
 ## Default Accounts
 
 - Username: gas_admin
-- Email: gas_admin@gmail.com
 - Password: `ptZaJ2njsX!oiAo`
 
 ## Test
