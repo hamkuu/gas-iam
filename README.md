@@ -4,6 +4,11 @@
 
 A simple registration application for Gas customers.
 
+## User Stories
+
+- As a new gas customer, I want to create an account, so that I can access my profile.
+- ガスの新規利用者として、プロフィールにアクセスするために、アカウントを作成したい。
+
 ## Live Demo
 
 - React UI: [gas.hamkuu.com](https://gas.hamkuu.com)
