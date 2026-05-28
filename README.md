@@ -16,6 +16,19 @@ A simple registration application for Gas customers.
 - Django Admin: [backend.gas.hamkuu.com/admin](https://backend.gas.hamkuu.com/admin/)
 - Backend Swagger UI: [swagger-ui](https://backend.gas.hamkuu.com/api/schema/swagger-ui/)
 
+## Getting-started
+
+```bash
+docker compose build
+docker compose up
+```
+
+## Lint & Format
+
+```bash
+pre-commit run --all-files
+```
+
 ## Sub-README
 
 - [Backend README](backend/README.md)
